@@ -1,0 +1,168 @@
+{
+	"info": {
+		"_postman_id": "141182df-b0d1-4122-aee0-e1e339df5663",
+		"name": "Bicicletario",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "31213338"
+	},
+	"item": [
+		{
+			"name": "Criar o serviço",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "fiware-service",
+						"value": "openiot",
+						"type": "text"
+					},
+					{
+						"key": "fiware-servicepath",
+						"value": "/",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"services\": [\r\n        {\r\n            \"apikey\": \"4jggokgpepnvsb2uv4s40d59ov\",\r\n            \"cbroker\": \"http://orion:1026\",\r\n            \"entity_type\": \"Device\",\r\n            \"resource\": \"/iot/json\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:4041/iot/services"
+			},
+			"response": []
+		},
+		{
+			"name": "Provisionar uma bicicleta",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "fiware-service",
+						"value": "openiot",
+						"type": "text"
+					},
+					{
+						"key": "fiware-servicepath",
+						"value": "/",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"devices\": [\r\n        {\r\n            \"device_id\": \"bike001\",\r\n            \"entity_name\": \"urn:ngsi-ld:Device:001\",\r\n            \"entity_type\": \"Device\",\r\n            \"transport\": \"HTTP\",\r\n            \"endpoint\": \"http://dummy-device:80/bic23\",\r\n            \"commands\": [\r\n                {\r\n                    \"name\": \"start\",\r\n                    \"type\": \"command\"\r\n                },\r\n                {\r\n                    \"name\": \"stop\",\r\n                    \"type\": \"command\"\r\n                },{\r\n                    \"name\": \"interval\",\r\n                    \"type\": \"command\"\r\n                }\r\n            ],\r\n            \"static_attributes\": [\r\n                {\r\n                    \"name\": \"Modelo\",\r\n                    \"type\": \"Modelo\",\r\n                    \"value\": \"Caloi\"\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:4041/iot/devices"
+			},
+			"response": []
+		},
+		{
+			"name": "Obter bicicleta",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "fiware-service",
+						"value": "openiot",
+						"type": "text"
+					},
+					{
+						"key": "fiware-servicepath",
+						"value": "/",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:1026/v2/entities/urn:ngsi-ld:Device:001?type=Device&options=keyValues",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1026",
+					"path": [
+						"v2",
+						"entities",
+						"urn:ngsi-ld:Device:001"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "Device"
+						},
+						{
+							"key": "options",
+							"value": "keyValues"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Enviar comando via Orion Context Broker",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "fiware-service",
+						"value": "openiot",
+						"type": "text"
+					},
+					{
+						"key": "fiware-servicepath",
+						"value": "/",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"start\": {\r\n        \"type\": \"command\",\r\n        \"value\": \"\"     \r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:1026/v2/entities/urn:ngsi-ld:Device:001/attrs?type=Device",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "1026",
+					"path": [
+						"v2",
+						"entities",
+						"urn:ngsi-ld:Device:001",
+						"attrs"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "Device"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
