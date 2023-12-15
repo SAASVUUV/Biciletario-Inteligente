@@ -1,6 +1,6 @@
 # Biciletario-Inteligente
 Trabalho de Tópicos em IOT
-
+Grupo: Luis Felipe Seabra, Bruna de Assunção, Carol Fernandes, Pedro Lanzarini
 
 INSTRUÇÕES:
 
